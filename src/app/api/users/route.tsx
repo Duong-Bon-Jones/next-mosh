@@ -16,5 +16,9 @@ export const GET = () => {
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
 
-  return NextResponse.json(body);
+  if (!body.name) {
+    return NextResponse.json({ error: "Name is required" }, { status: 400 });
+  }
+
+  return NextResponse.json({ id: 1, ...body }, { status: 201 });
 };

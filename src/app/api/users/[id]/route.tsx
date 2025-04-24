@@ -16,3 +16,39 @@ export const GET = async (
     },
   ]);
 };
+
+export const PUT = async (
+  req: NextRequest,
+  { params }: { params: Promise<{ id: number }> }
+) => {
+  const body = await req.json();
+
+  if (!body.name) {
+    return NextResponse.json({ error: "Name is required" }, { status: 400 });
+  }
+
+  const { id } = await params;
+
+  if (id > 10) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ id: 1, name: body.name });
+};
+
+export const DELETE = async (
+  req: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{ id: number }>;
+  }
+) => {
+  const { id } = await params;
+
+  if (id > 10) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({});
+};
